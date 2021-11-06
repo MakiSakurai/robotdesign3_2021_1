@@ -59,12 +59,21 @@ with mp_hands.Hands(
         cx3_7 = int(cx3_7)
         cy3_7 = int(cy3_7)
         cv2.circle(image, (cx3_7,cy3_7), 5, (0, 255, 0), 2)
+
         cx7_11,cy7_11 = (cx7+cx11)/2, (cy7+cy11)/2
-        #cv2.circle(image, (cx7_11,cy7_11), 5, (0, 255, 0), 2)
+        cx7_11 = int(cx7_11)
+        cy7_11 = int(cy7_11)
+        cv2.circle(image, (cx7_11,cy7_11), 5, (0, 255, 0), 2)
+
         cx11_15,cy11_15 = (cx11+cx15)/2, (cy11+cy15)/2
-        #cv2.circle(image, (cx11_15,cy11_15), 5, (0, 255, 0), 2)
+        cx11_15 = int(cx11_15)
+        cy11_15 = int(cy11_15)
+        cv2.circle(image, (cx11_15,cy11_15), 5, (0, 255, 0), 2)
+
         cx15_19,cy15_19 = (cx15+cx19)/2, (cy15+cy19)/2
-        #cv2.circle(image, (cx15_19,cy15_19), 5, (0, 255, 0), 2)
+        cx15_19 = int(cx15_19)
+        cy15_19 = int(cy15_19)
+        cv2.circle(image, (cx15_19,cy15_19), 5, (0, 255, 0), 2)
 
         mp_drawing.draw_landmarks(
             image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
