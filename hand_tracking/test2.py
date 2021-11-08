@@ -1,5 +1,6 @@
 import cv2
 import mediapipe as mp
+from numpy.lib.type_check import imag
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
 
@@ -31,37 +32,46 @@ with mp_hands.Hands(
       for hand_landmarks in results.multi_hand_landmarks:
         #各指の第一関節の座標を変数に格納
         for index, landmark in enumerate(hand_landmarks.landmark):
+            landmark_x = min(int(landmark.x * image_width), image_width - 1)
+            landmark_y = min(int(landmark.y * image_height), image_height - 1)
+
             if index == 3: #親指第一関節
-                cx3,cy3 = landmark.x * image_width, landmark.y * image_height
+                #cx3,cy3 = landmark.x * image_width, landmark.y * image_height
+                cx3,cy3 = landmark_x, landmark_y
             if index == 7: #人差し指第一関節
-                cx7,cy7 = landmark.x * image_width, landmark.y * image_height
+                cx7,cy7 = landmark_x, landmark_y
             if index == 11: #中指第一関節
-                cx11,cy11 = landmark.x * image_width, landmark.y * image_height
+                cx11,cy11 = landmark_x, landmark_y
             if index == 15: #薬指第一関節
-                cx15,cy15 = landmark.x * image_width, landmark.y * image_height
+                cx15,cy15 = landmark_x, landmark_y
             if index == 19: #小指第一関節
-                cx19,cy19 = landmark.x * image_width, landmark.y * image_height
-
+                cx19,cy19 = landmark_x, landmark_y
         #取得した座標より各指の中間点を表示
-        cx3_7,cy3_7 = (cx3+cx7)/2, (cy3+cy7)/2
-        cx3_7 = int(cx3_7)
-        cy3_7 = int(cy3_7)
-        cv2.circle(image, (cx3_7,cy3_7), 5, (0, 255, 0), 2)
-        cx7_11,cy7_11 = (cx7+cx11)/2, (cy7+cy11)/2
-        cx7_11 = int(cx7_11)
-        cy7_11 = int(cy7_11)
-        cv2.circle(image, (cx7_11,cy7_11), 5, (0, 255, 0), 2)
-        cx11_15,cy11_15 = (cx11+cx15)/2, (cy11+cy15)/2
-        cx11_15 = int(cx11_15)
-        cy11_15 = int(cy11_15)
-        cv2.circle(image, (cx11_15,cy11_15), 5, (0, 255, 0), 2)
-        cx15_19,cy15_19 = (cx15+cx19)/2, (cy15+cy19)/2
-        cx15_19 = int(cx15_19)
-        cy15_19 = int(cy15_19)
-        cv2.circle(image, (cx15_19,cy15_19), 5, (0, 255, 0), 2)
+        gap1x,gap1y = (cx3+cx7)/2, (cy3+cy7)/2
+        gap1x = int(gap1x)
+        gap1y = int(gap1y)
+        cv2.circle(image, (gap1x,gap1y), 5, (0, 255, 0), 2)
+        gap2x,gap2y = (cx7+cx11)/2, (cy7+cy11)/2
+        gap2x = int(gap2x)
+        gap2y = int(gap2y)
+        cv2.circle(image, (gap2x,gap2y), 5, (0, 255, 0), 2)
+        gap3x,gap3y = (cx11+cx15)/2, (cy11+cy15)/2
+        gap3x = int(gap3x)
+        gap3y = int(gap3y)
+        cv2.circle(image, (gap3x,gap3y), 5, (0, 255, 0), 2)
+        gap4x,gap4y = (cx15+cx19)/2, (cy15+cy19)/2
+        gap4x = int(gap4x)
+        gap4y = int(gap4y)
+        cv2.circle(image, (gap4x,gap4y), 5, (0, 255, 0), 2)
 
-        cv2.putText(image,"cx3_7:"+str(cx3_7)+"cy3_7:"+str(cy3_7),(10,30),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 2505, 0), 2, cv2.LINE_AA)
+        cv2.putText(image,"gap1x:"+str(gap1x-image_width/2)+"gap1y:"+str(gap1y-image_height/2),(10,30),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
+        cv2.putText(image,"gap2x:"+str(gap2x-image_width/2)+"gap2y:"+str(gap2y-image_height/2),(10,60),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
+        cv2.putText(image,"gap3x:"+str(gap3x-image_width/2)+"gap3y:"+str(gap3y-image_height/2),(10,90),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
+        cv2.putText(image,"gap4x:"+str(gap4x-image_width/2)+"gap4y:"+str(gap4y-image_height/2),(10,120),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)                                                            
 
         mp_drawing.draw_landmarks(
             image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
