@@ -41,7 +41,7 @@ with mp_hands.Hands(
                 cx15,cy15 = landmark.x * image_width, landmark.y * image_height
             if index == 19: #小指第一関節
                 cx19,cy19 = landmark.x * image_width, landmark.y * image_height
-                
+
         #取得した座標より各指の中間点を表示
         cx3_7,cy3_7 = (cx3+cx7)/2, (cy3+cy7)/2
         cx3_7 = int(cx3_7)
@@ -59,6 +59,9 @@ with mp_hands.Hands(
         cx15_19 = int(cx15_19)
         cy15_19 = int(cy15_19)
         cv2.circle(image, (cx15_19,cy15_19), 5, (0, 255, 0), 2)
+
+        cv2.putText(image,"cx3_7:"+str(cx3_7)+"cy3_7:"+str(cy3_7),(10,30),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 2505, 0), 2, cv2.LINE_AA)
 
         mp_drawing.draw_landmarks(
             image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
