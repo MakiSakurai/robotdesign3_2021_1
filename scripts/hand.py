@@ -20,7 +20,7 @@ def main():
     # 刺す位置に移動する
     target_pose = geometry_msgs.msg.Pose()
     target_pose.position.x = 0.2
-    target_pose.position.y = 0.2
+    target_pose.position.y = 0.1
     target_pose.position.z = 0.3
     #q = quaternion_from_euler(-3.14, 0.0, -3.14/2.0)  #上方から掴みに行く場合
     target_pose.orientation.x = q[0]
