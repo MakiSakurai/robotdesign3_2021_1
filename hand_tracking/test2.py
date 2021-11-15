@@ -51,26 +51,33 @@ with mp_hands.Hands(
         gap1x = int(gap1x)
         gap1y = int(gap1y)
         cv2.circle(image, (gap1x,gap1y), 5, (0, 255, 0), 2)
+        gap1x,gap1y = gap1x-image_width/2,-(gap1y-image_height/2)
+        
         gap2x,gap2y = (cx7+cx11)/2, (cy7+cy11)/2
         gap2x = int(gap2x)
         gap2y = int(gap2y)
         cv2.circle(image, (gap2x,gap2y), 5, (0, 255, 0), 2)
+        gap2x,gap2y = gap2x-image_width/2,-(gap2y-image_height/2)
+
         gap3x,gap3y = (cx11+cx15)/2, (cy11+cy15)/2
         gap3x = int(gap3x)
         gap3y = int(gap3y)
         cv2.circle(image, (gap3x,gap3y), 5, (0, 255, 0), 2)
+        gap3x,gap3y = gap3x-image_width/2,-(gap3y-image_height/2)
+
         gap4x,gap4y = (cx15+cx19)/2, (cy15+cy19)/2
         gap4x = int(gap4x)
         gap4y = int(gap4y)
         cv2.circle(image, (gap4x,gap4y), 5, (0, 255, 0), 2)
+        gap4x,gap4y = gap4x-image_width/2,-(gap4y-image_height/2)
 
-        cv2.putText(image,"gap1x:"+str(gap1x-image_width/2)+"gap1y:"+str(gap1y-image_height/2),(10,30),
+        cv2.putText(image,"gap1x:"+str(gap1x)+"gap1y:"+str(gap1y),(10,30),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
-        cv2.putText(image,"gap2x:"+str(gap2x-image_width/2)+"gap2y:"+str(gap2y-image_height/2),(10,60),
+        cv2.putText(image,"gap2x:"+str(gap2x)+"gap2y:"+str(gap2y),(10,60),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
-        cv2.putText(image,"gap3x:"+str(gap3x-image_width/2)+"gap3y:"+str(gap3y-image_height/2),(10,90),
+        cv2.putText(image,"gap3x:"+str(gap3x)+"gap3y:"+str(gap3y),(10,90),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
-        cv2.putText(image,"gap4x:"+str(gap4x-image_width/2)+"gap4y:"+str(gap4y-image_height/2),(10,120),
+        cv2.putText(image,"gap4x:"+str(gap4x)+"gap4y:"+str(gap4y),(10,120),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)                                                            
 
         mp_drawing.draw_landmarks(
