@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>hand_test</name>
+  <name>RobotDesign3_2021_1</name>
   <version>0.0.0</version>
-  <description>The hand_test package</description>
+  <description>The RobotDesign3_2021_1 package</description>
 
-  <maintainer email="ueda@todo.todo">ueda</maintainer>
+  <maintainer email="nikumann8@gmail.com">sakurai</maintainer>
 
   <license>NON-COMMERCIAL LICENSE AGREEMENT</license>
 
