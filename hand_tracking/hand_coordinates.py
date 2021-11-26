@@ -10,8 +10,8 @@ mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
 
 def main():
-  rospy.init_node("unko")
-  point_pub = rospy.Publisher("anego", Point,queue_size=10)
+  rospy.init_node("MediaPipe_node")
+  point_pub = rospy.Publisher("hand_topic", Point,queue_size=10)
   r = rospy.Rate(10) # 10hz
   while not rospy.is_shutdown():
   # For webcam input:
@@ -81,8 +81,8 @@ def main():
             gap4x,gap4y = gap4x-image_width/2,-(gap4y-image_height/2)
 
             point = Point()
-            point.x = gap1x
-            point.y = gap1y
+            point.x = gap2x
+            point.y = gap2y
             point.z = 0
             point_pub.publish(point)
             
