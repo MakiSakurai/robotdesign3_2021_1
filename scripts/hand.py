@@ -5,13 +5,22 @@ import rospy
 import moveit_commander
 import geometry_msgs.msg
 import rosnode
+from geometry_msgs.msg import Point
 from tf.transformations import quaternion_from_euler
 
 def main():
-    rospy.init_node("test_hand")
+    rospy.init_node("anego")
+    pub = rospy.Subscriber("hand_topic", Point, queue_size=10)
+
+    listener = tf.TransformListener()
+    try:
+        (trans,rot) = listener.lookupTransform('/base_link', '/camera_base_link', rospy.Time(0))
+    except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
+        continue
     arm = moveit_commander.MoveGroupCommander("arm")
     arm.set_max_velocity_scaling_factor(0.1)
     arm.set_max_acceleration_scaling_factor(1.0)
+
 
     while len([s for s in rosnode.get_node_names() if 'rviz' in s]) == 0:
         rospy.sleep(1.0)
@@ -34,7 +43,6 @@ def main():
 
 
 if __name__ == '__main__':
-
     try:
         if not rospy.is_shutdown():
             main()
