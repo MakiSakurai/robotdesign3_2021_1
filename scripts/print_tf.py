@@ -9,10 +9,9 @@ import tf2_ros
 from geometry_msgs.msg import Point
 from tf.transformations import quaternion_from_euler
 class tekitou():
+    
     def __init__(self):
-
         rospy.init_node('hoge')
-        rospy.Subscriber('/hand_topic', Point, self.callback, queue_size=1)
 
     def callback(self, data):
         self.t_x = data.x
@@ -21,26 +20,26 @@ class tekitou():
 
     def loop(self):
         rate = rospy.Rate(10.0)
+        rospy.Subscriber('/hand_topic', Point, self.callback, queue_size=1)
         tfBuffer = tf2_ros.Buffer()
         listener = tf2_ros.TransformListener(tfBuffer)
-        try:
-            trans = tfBuffer.lookup_transform("base_link", "camera_base", rospy.Time(0))
-        except Exception as e:
-            print("muri")
         rate.sleep()
-        plus_x = trans.transform.translation.x + self.t_x
-        plus_y = trans.transform.translation.y + self.t_y
-        plus_z = trans.transform.translation.z + self.t_z
+        try:
+            self.trans = tfBuffer.lookup_transform("base_link", "camera_base", rospy.Time(0))
+        except Exception as e:
+            print("u-nn")
+        plus_x = self.trans.transform.translation.x + self.t_x
+        plus_y = self.trans.transform.translation.y + self.t_y
+        plus_z = self.trans.transform.translation.z + self.t_z
         print(plus_x, plus_y, plus_z)
 
 
 def main():
     makimaki = tekitou()
-    
-
     while not rospy.is_shutdown():
         makimaki.loop()
  
             
 if __name__ == '__main__':   
+
     main()
