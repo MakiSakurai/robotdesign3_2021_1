@@ -8,9 +8,9 @@ import math
 import tf2_ros
 from geometry_msgs.msg import Point
 
-class tekitou():
+class coordinate():
     def __init__(self):
-        rospy.init_node('hoge')
+        rospy.init_node('MediaPipe_TF')
         rospy.Subscriber('/hand_topic', Point, self.callback, queue_size=1)
         self.t_x = 0
         self.t_y = 0
@@ -28,9 +28,8 @@ class tekitou():
         while not rospy.is_shutdown():
             try:
                 trans = tfBuffer.lookup_transform("base_link", "camera_base", rospy.Time(0))
-                print("100")
             except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
-                print("muri")      
+                print("I'm not getting TF.")      
                 continue
 
             rate.sleep()    
@@ -44,5 +43,5 @@ class tekitou():
 
 
 if __name__ == '__main__': 
-    makimaki = tekitou()  
+    makimaki = coordinate()  
     makimaki.loop()
