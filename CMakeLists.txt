@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(RobotDesign3_2021_1)
+project(robotdesign3_2021_1)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
