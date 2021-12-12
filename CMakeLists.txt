@@ -9,6 +9,9 @@ project(robotdesign3_2021_1)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   rospy
+  std_msgs
+  geometry_msgs
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
