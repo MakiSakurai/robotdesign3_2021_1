@@ -30,9 +30,17 @@ def main():
     print(key)
 
     if key == "h":    
-        target_pose = geometry_msgs.msg.Pose()
+        #駆動速度設定（通常の２分の１ほどに設定）
+        arm.set_max_velocity_scaling_factor(0.25)
+        arm.set_max_acceleration_scaling_factor(0.5)
+        #一度verticalの姿勢にする
+        print("vertical")
+        arm.set_named_target("vertical")
+        arm.go()
 
-        target_pose.position.x = 0.02
+        """""
+        target_pose = geometry_msgs.msg.Pose()
+        target_pose.position.x = 0.
         target_pose.position.y = 0.1
         target_pose.position.z = 0.6
         q = quaternion_from_euler( 0.0, 0.0, 0.0 )
@@ -42,12 +50,26 @@ def main():
         target_pose.orientation.w = q[3]
         arm.set_pose_target( target_pose )
         arm.go()
+        #target_joint_values[5] = math.radians(-30)
+        #arm.set_joint_value_target(target_joint_values)
+        #arm.go()
+        print("gre")
+        """
+        target_joint_values = arm.get_current_joint_values()
+        target_joint_values[1] = math.radians(-10)
+        target_joint_values[2] = math.radians(0)
+        target_joint_values[3] = math.radians(-80)
+        target_joint_values[4] = math.radians(0)
         target_joint_values[5] = math.radians(-90)
+        target_joint_values[6] = math.radians(0)
         arm.set_joint_value_target(target_joint_values)
         arm.go()
-        print("gre")
+        print("current_joint_values (radians):")
 
-
+        arm_goal_pose = arm.get_current_pose().pose
+        print("Arm goal pose:")
+        print(arm_goal_pose)
+    """""
     if key == "t":    
         target_pose = geometry_msgs.msg.Pose()
         target_pose.position.x = 0.0
@@ -77,7 +99,11 @@ def main():
     print("Arm goal pose:")
     print(arm_goal_pose)
     print("done")
-
+    """
+    if key == "f":
+        print("vertical")
+        arm.set_named_target("vertical")
+        arm.go()
 
 if __name__ == '__main__':
     while not rospy.is_shutdown():
