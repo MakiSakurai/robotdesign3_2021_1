@@ -15,8 +15,9 @@ def main():
     rospy.init_node("pose_groupstate_example")
     robot = moveit_commander.RobotCommander()
     arm = moveit_commander.MoveGroupCommander("arm")
-    arm.set_max_velocity_scaling_factor(0.1)
-    arm.set_max_acceleration_scaling_factor(1.0)
+    #安全性のため速度を1/2ほどに設定
+    arm.set_max_velocity_scaling_factor(0.25)
+    arm.set_max_acceleration_scaling_factor(0.5)
     gripper = moveit_commander.MoveGroupCommander("gripper")
     arm.set_max_velocity_scaling_factor(0.5)
     arm.set_max_acceleration_scaling_factor(1.0)
@@ -30,9 +31,6 @@ def main():
     print(key)
 
     if key == "h":    
-        #駆動速度設定（通常の２分の１ほどに設定）
-        arm.set_max_velocity_scaling_factor(0.25)
-        arm.set_max_acceleration_scaling_factor(0.5)
         #一度verticalの姿勢にする
         print("vertical")
         arm.set_named_target("vertical")
@@ -69,20 +67,61 @@ def main():
         arm_goal_pose = arm.get_current_pose().pose
         print("Arm goal pose:")
         print(arm_goal_pose)
-    """""
-    if key == "t":    
+    
+    if key == "t":    #確認用
         target_pose = geometry_msgs.msg.Pose()
-        target_pose.position.x = 0.0
-        target_pose.position.y = 0.0
-        target_pose.position.z = 0.4
+        target_pose.position.x = 0.2
+        target_pose.position.y = 0.1
+        target_pose.position.z = 0.3
         q = quaternion_from_euler( 0.0, 0.0, 0.0 )
-        target_pose.orientation.x = q[0]
-        target_pose.orientation.y = q[1]
-        target_pose.orientation.z = q[2]
-        target_pose.orientation.w = q[3]
+        #ここから下の４行が手首の角度に関わる。現在入っている値はホームポジの時の手先座標
+        target_pose.orientation.x = 0.0
+        target_pose.orientation.y = -0.999909353162
+        target_pose.orientation.z = 0.0
+        target_pose.orientation.w = 0.0133428352264
+        arm.set_pose_target( target_pose )
+        arm.go()
+        
+    if key == "y":    #確認用
+        target_pose = geometry_msgs.msg.Pose()
+        target_pose.position.x = 0.2
+        target_pose.position.y = 0.2
+        target_pose.position.z = 0.3
+        q = quaternion_from_euler( 0.0, 0.0, 0.0 )
+        target_pose.orientation.x = 0.0
+        target_pose.orientation.y = -0.999909353162
+        target_pose.orientation.z = 0.0
+        target_pose.orientation.w = 0.0133428352264
         arm.set_pose_target( target_pose )
         arm.go()
 
+    if key == "x":    #確認用
+        target_pose = geometry_msgs.msg.Pose()
+        target_pose.position.x = 0.3
+        target_pose.position.y = 0.2
+        target_pose.position.z = 0.3
+        q = quaternion_from_euler( 0.0, 0.0, 0.0 )
+        target_pose.orientation.x = 0.0
+        target_pose.orientation.y = -0.999909353162
+        target_pose.orientation.z = 0.0
+        target_pose.orientation.w = 0.0133428352264
+        arm.set_pose_target( target_pose )
+        arm.go()    
+
+    if key == "Y":    #確認用
+        target_pose = geometry_msgs.msg.Pose()
+        target_pose.position.x = 0.3
+        target_pose.position.y = -0.2
+        target_pose.position.z = 0.3
+        q = quaternion_from_euler( 0.0, 0.0, 0.0 )
+        target_pose.orientation.x = 0.0
+        target_pose.orientation.y = -0.999909353162
+        target_pose.orientation.z = 0.0
+        target_pose.orientation.w = 0.0133428352264
+        arm.set_pose_target( target_pose )
+        arm.go()   
+
+    """""
     if key == "z":    
         target_pose = geometry_msgs.msg.Pose()
         target_pose.position.x = 0.0
