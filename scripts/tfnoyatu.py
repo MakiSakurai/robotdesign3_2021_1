@@ -20,7 +20,7 @@ from geometry_msgs.msg import Point
 class Home(object):
 
     def __init__(self):
-        rospy.init_node("pose_groupstate_example")
+        rospy.init_node("Pose_MediaPipe")
         rospy.Subscriber('/hand_topic', Point, self.callback, queue_size=1)
         self._client = actionlib.SimpleActionClient("/crane_x7/gripper_controller/gripper_cmd",GripperCommandAction)
         self._goal = GripperCommandGoal()
@@ -120,7 +120,7 @@ class Home(object):
         if key == "t":    #確認用
             target_pose = geometry_msgs.msg.Pose()
             target_pose.position.x = 0.3 + self.t_y
-            target_pose.position.y = 0.0 - self.t_x
+            target_pose.position.y = 0.0 + self.t_x
             print(target_pose.position.x, target_pose.position.y)
             target_pose.position.z = 0.3
             q = quaternion_from_euler( 0.0, 0.0, 0.0 )
@@ -194,6 +194,7 @@ class Home(object):
             print("vertical")
             arm.set_named_target("vertical")
             arm.go()
+            
     def run(self):
         try:
             while not rospy.is_shutdown():
