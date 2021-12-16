@@ -1,6 +1,5 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-
 import rospy
 import sys
 import moveit_commander
@@ -16,9 +15,7 @@ from control_msgs.msg import (
     GripperCommandGoal
 )
 from geometry_msgs.msg import Point
-
 class Home(object):
-
     def __init__(self):
         rospy.init_node("Pose_MediaPipe")
         rospy.Subscriber('/hand_topic', Point, self.callback, queue_size=1)
@@ -35,32 +32,24 @@ class Home(object):
         self.t_x = 0
         self.t_y = 0
         self.t_z = 0
-
     def command(self, position, effort):
         self._goal.command.position = position
         self._goal.command.max_effort = effort
         self._client.send_goal(self._goal,feedback_cb=self.feedback)
-
     def callback(self, data):
         self.t_x = data.x
         self.t_y = data.y
         self.t_z = data.z
-
-
     def feedback(self,msg):
         print("feedback callback")
         print(msg)
-
     def stop(self):
         self._client.cancel_goal()
-
     def wait(self, timeout=0.1 ):
         self._client.wait_for_result(timeout=rospy.Duration(timeout))
         return self._client.get_result()
-
     def clear(self):
         self._goal = GripperCommandGoal()
-
     def manipulation(self, x, y):
         gc = Home()
         arm = moveit_commander.MoveGroupCommander("arm")
@@ -75,9 +64,7 @@ class Home(object):
             rospy.sleep(1.0)
         rospy.sleep(1.0)
         key = raw_input()
-
-        if key == "o": 
-            
+        if key == "o":
             print("Open Gripper.")
             gripper = 45.0
             gc.command(math.radians(gripper),1.0)
@@ -85,22 +72,34 @@ class Home(object):
             print(result)
             rospy.sleep(1.0)
             print("")
-
-        if key == "c": 
+        if key == "c":
             print("Close Gripper.")
             gripper = 0.0 # 0.0
             gc.command(math.radians(gripper),1.0)
             result = gc.wait(2.0)
             print(result)
             rospy.sleep(1.0)
-        
-
-        if key == "h":    
-
+        if key == "h":   
+            target_pose = geometry_msgs.msg.Pose()
+            target_pose.position.x = 0.3
+            target_pose.position.y = 0.0
+            target_pose.position.z = 0.3
+            q = quaternion_from_euler( 0.0, 0.0, 0.0 )
+            target_pose.orientation.x = -0.0
+            target_pose.orientation.y = -0.999909353162
+            target_pose.orientation.z = 0.0
+            target_pose.orientation.w = 0.0133428352264
+            target_joint_values[6] = math.radians(90)
+            arm.set_pose_target( target_pose )
+            arm.set_joint_value_target(target_joint_values)
+            print("current_joint_values (radians):")
+            arm_goal_pose = arm.get_current_pose().pose
+            arm.go()
             #一度verticalの姿勢にする
-            #print("vertical")
-            #arm.set_named_target("vertical")
-            #arm.go()
+            """
+            print("vertical")
+            arm.set_named_target("vertical")
+            arm.go()
             target_joint_values = arm.get_current_joint_values()
             target_joint_values[1] = math.radians(-10)
             target_joint_values[2] = math.radians(0)
@@ -111,12 +110,10 @@ class Home(object):
             arm.set_joint_value_target(target_joint_values)
             arm.go()
             print("current_joint_values (radians):")
-
             arm_goal_pose = arm.get_current_pose().pose
             print("Arm goal pose:")
             print(arm_goal_pose)
-
-        
+            """
         if key == "t":    #確認用
             target_pose = geometry_msgs.msg.Pose()
             target_pose.position.x = 0.3 + self.t_y
@@ -131,65 +128,6 @@ class Home(object):
             target_pose.orientation.w = 0.0133428352264
             arm.set_pose_target( target_pose )
             arm.go()
-            
-        if key == "y":    #確認用
-            target_pose = geometry_msgs.msg.Pose()
-            target_pose.position.x = 0.3
-            target_pose.position.y = 0.0
-            target_pose.position.z = 0.3
-            q = quaternion_from_euler( 0.0, 0.0, 0.0 )
-            target_pose.orientation.x = 0.0
-            target_pose.orientation.y = -0.999909353162
-            target_pose.orientation.z = 0.0
-            target_pose.orientation.w = 0.0133428352264
-            arm.set_pose_target( target_pose )
-            arm.go()
-
-        if key == "x":    #確認用
-            target_pose = geometry_msgs.msg.Pose()
-            target_pose.position.x = 0
-            target_pose.position.y = 0.2
-            target_pose.position.z = 0.3
-            q = quaternion_from_euler( 0.0, 0.0, 0.0 )
-            target_pose.orientation.x = 0.0
-            target_pose.orientation.y = -0.999909353162
-            target_pose.orientation.z = 0.0
-            target_pose.orientation.w = 0.0133428352264
-            arm.set_pose_target( target_pose )
-            arm.go()    
-
-        if key == "Y":    #確認用
-            target_pose = geometry_msgs.msg.Pose()
-            target_pose.position.x = 0.3
-            target_pose.position.y = -0.2
-            target_pose.position.z = 0.3
-            q = quaternion_from_euler( 0.0, 0.0, 0.0 )
-            target_pose.orientation.x = 0.0
-            target_pose.orientation.y = -0.999909353162
-            target_pose.orientation.z = 0.0
-            target_pose.orientation.w = 0.0133428352264
-            arm.set_pose_target( target_pose )
-            arm.go()   
-
-        """""
-        if key == "z":    
-            target_pose = geometry_msgs.msg.Pose()
-            target_pose.position.x = 0.0
-            target_pose.position.y = 2.0
-            target_pose.position.z = 0.0
-            q = quaternion_from_euler( 0.0, 0.0, 0.0 )
-            target_pose.orientation.x = q[0]
-            target_pose.orientation.y = q[1]
-            target_pose.orientation.z = q[2]
-            target_pose.orientation.w = q[3]
-            arm.set_pose_target( target_pose )
-            arm.go()
-        arm_goal_pose = arm.get_current_pose().pose
-        print("Arm goal pose:")
-        print(arm_goal_pose)
-        print("done")
-        """
-
         if key == "f":
             print("vertical")
             arm.set_named_target("vertical")
@@ -201,7 +139,6 @@ class Home(object):
                 self.manipulation(self.t_x, self.t_y)
         except rospy.ROSInterruptException:
             pass
-
 if __name__ == '__main__':
     while not rospy.is_shutdown():
             Home().run()

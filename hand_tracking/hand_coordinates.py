@@ -82,8 +82,8 @@ def main():
           gap4x,gap4y = gap4x-image_width/2,-(gap4y-image_height/2)
 
           point = Point()
-          point.x = gap2x
-          point.y = gap2y
+          point.x = gap2x/3000
+          point.y = gap2y/3000
           point.z = 0
           point_pub.publish(point)
           
