@@ -55,6 +55,7 @@ def main():
                   cx15,cy15 = landmark_x, landmark_y
               if index == 19: #小指第一関節
                   cx19,cy19 = landmark_x, landmark_y
+
           #取得した座標より各指の中間点を表示
           gap1x,gap1y = (cx3+cx7)/2, (cy3+cy7)/2
           gap1x = int(gap1x)
@@ -81,8 +82,8 @@ def main():
           gap4x,gap4y = gap4x-image_width/2,-(gap4y-image_height/2)
 
           point = Point()
-          point.x = gap2x
-          point.y = gap2y
+          point.x = gap2x/3000
+          point.y = gap2y/3000
           point.z = 0
           point_pub.publish(point)
           
