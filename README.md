@@ -1,6 +1,34 @@
-# RobotDesign3_2021_1
-Repository for RobotDesign3
-Hi!
+CRANE-X7のROSパッケージです。このパッケージはオリジナルである [https://github.com/rt-net/crane_x7_ros]　に対して千葉工業大学未来ロボティクス学科の2021年度の設計製作論3という講義で知能コース1班が変更を加えたものです。
 
-![Screenshot from 2021-11-06 22-54-55](https://user-images.githubusercontent.com/76610691/140612658-1c3a8be0-8ab3-48cb-97ce-c096ab43b525.png)
+# RobotDesign3_2021_1
+
+ ## 動作環境
+ 
+ ## インストール方法
+
+### ソースからビルドする方法
+
+
+## セットアップ方法
+
+
+## パッケージ概要
+
+
+### 知的財産権について
+
+CRANE-X7は、アールティが開発した研究用アームロボットです。
+このリポジトリのデータ等に関するライセンスについては、LICENSEファイルをご参照ください。
+企業による使用については、自社内において研究開発をする目的に限り、本データの使用を許諾します。 
+本データを使って自作されたい方は義務ではありませんが弊社ロボットショップで部品をお買い求めいただければ、励みになります。
+商業目的をもって本データを使用する場合は、商業用使用許諾の条件等について弊社までお問合せください。
+
+サーボモータのXM540やXM430に関するCADモデルの使用については、ROBOTIS社より使用許諾を受けています。 
+CRANE-X7に使用されているROBOTIS社の部品類にかかる著作権、商標権、その他の知的財産権は、ROBOTIS社に帰属します。
+
+### Proprietary Rights
+
+CRANE-X7 is an arm robot developed by RT Corporation for research purposes. Please read the license information contained in this repository to find out more about licensing. Companies are permitted to use CRANE-X7 and the materials made available here for internal, research and development purposes only. If you are interested in building your own robot for your personal use by utilizing the information made available here, take your time to visit our website and purchase relevant components and parts – that will certainly help us keep going! Otherwise, if you are interested in manufacturing and commercializing products based on the information herein, please contact us to arrange a license and collaboration agreement with us. 
+
+We have obtained permission from ROBOTIS Co., Ltd. to use CAD models relating to servo motors XM540 and XM430. The proprietary rights relating to any components or parts manufactured by ROBOTIS and used in this product, including but not limited to copyrights, trademarks, and other intellectual property rights, shall remain vested in ROBOTIS.
 
