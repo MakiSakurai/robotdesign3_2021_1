@@ -55,8 +55,8 @@ class Home(object):
         gc = Home()
         arm = moveit_commander.MoveGroupCommander("arm")
         #安全性のため速度を1/2ほどに設定
-        arm.set_max_velocity_scaling_factor(0.5)
-        arm.set_max_acceleration_scaling_factor(1.0)
+        arm.set_max_velocity_scaling_factor(0.25)
+        arm.set_max_acceleration_scaling_factor(0.5)
         gripper = moveit_commander.MoveGroupCommander("gripper")
         arm.set_max_velocity_scaling_factor(0.5)
         arm.set_max_acceleration_scaling_factor(1.0)
@@ -114,31 +114,32 @@ class Home(object):
             print(arm_goal_pose)
 
         if key == "t": 
-            while True:
-                target_pose = geometry_msgs.msg.Pose()
-                target_joint_values = arm.get_current_joint_values()
-                target_pose.position.x = 0.26 + self.t_y
-                target_pose.position.y = self.t_x 
-                print(target_pose.position.x, target_pose.position.y)
-                target_pose.position.z = 0.3
-                q = quaternion_from_euler( -3.14, 0.0, -3.14/2.0 )
-                #ここから下の４行が手首の角度に関わる。現在入っている値はホームポジの時の手先座標
-                #q = quaternion_from_euler(-3.14, 0.0, -3.14/2.0)  # h掴みに行く場合
-            
-                target_pose.orientation.x = q[0]
-                target_pose.orientation.y = q[1]
-                target_pose.orientation.z = q[2]
-                target_pose.orientation.w = q[3]
-                """
-                target_pose.orientation.x = 0.653390349328
-                target_pose.orientation.y = 0.705918276099
-                target_pose.orientation.z = 0.0399071045366
-                target_pose.orientation.w = 0.0133428352264
+            x_buff = 0.26 + self.t_y - 0.045
+            y_buff = self.t_x + 0.05
+            target_pose = geometry_msgs.msg.Pose()
+            target_joint_values = arm.get_current_joint_values()
+            target_pose.position.x = x_buff
+            target_pose.position.y = y_buff
+            print(target_pose.position.x, target_pose.position.y)
+            print(x_buff, y_buff)
+            target_pose.position.z = 0.3
+            q = quaternion_from_euler( -3.14, 0.0, -3.14/2.0 )
+            #ここから下の４行が手首の角度に関わる。現在入っている値はホームポジの時の手先座標
+            #q = quaternion_from_euler(-3.14, 0.0, -3.14/2.0)  # h掴みに行く場合
+
+            target_pose.orientation.x = q[0]
+            target_pose.orientation.y = q[1]
+            target_pose.orientation.z = q[2]
+            target_pose.orientation.w = q[3]
             """
-                arm.set_pose_target( target_pose )
-                arm.go()
-                if (0xFF == 27):
-                    break
+            target_pose.orientation.x = 0.653390349328
+            target_pose.orientation.y = 0.705918276099
+            target_pose.orientation.z = 0.0399071045366
+            target_pose.orientation.w = 0.0133428352264
+        """
+            arm.set_pose_target( target_pose )
+            arm.go()
+                
 
 
         if key == "w":    #確認用
@@ -172,6 +173,10 @@ class Home(object):
             arm.set_pose_target( target_pose )
             arm.set_joint_value_target(target_joint_values)
             arm.go()
+
+        if key == "z":
+            print(x_buff,y_buff)
+
 
 
         if key == "f":
