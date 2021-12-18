@@ -74,6 +74,7 @@ class Home(object):
             print(result)
             rospy.sleep(1.0)
             print("")
+
         if key == "c":
             print("Close Gripper.")
             gripper = 0.0 # 0.0
@@ -81,6 +82,7 @@ class Home(object):
             result = gc.wait(2.0)
             print(result)
             rospy.sleep(1.0)
+
         if key == "h":   
             target_joint_values = arm.get_current_joint_values()
             target_joint_values[1] = math.radians(0)
@@ -113,33 +115,23 @@ class Home(object):
             print("Arm goal pose:")
             print(arm_goal_pose)
 
-        if key == "t":
-            key = "" 
-            while True:
-                x_buff = 0.26 + self.t_y - 0.045
-                y_buff = self.t_x + 0.05
-                target_pose = geometry_msgs.msg.Pose()
-                target_joint_values = arm.get_current_joint_values()
-                target_pose.position.x = x_buff
-                target_pose.position.y = y_buff
-                print(target_pose.position.x, target_pose.position.y)
-                print(x_buff, y_buff)
-                target_pose.position.z = 0.3
-                q = quaternion_from_euler( -3.14, 0.0, -3.14/2.0 )
-                #ここから下の４行が手首の角度に関わる。現在入っている値はホームポジの時の手先座標
-                #q = quaternion_from_euler(-3.14, 0.0, -3.14/2.0)  # h掴みに行く場合
+        if key == "q":
+            x_buff = 0.26 + self.t_y - 0.045
+            y_buff = self.t_x + 0.05
+            target_pose = geometry_msgs.msg.Pose()
+            target_joint_values = arm.get_current_joint_values()
+            target_pose.position.x = x_buff
+            target_pose.position.y = y_buff
+            print(target_pose.position.x, target_pose.position.y)
+            target_pose.position.z = 0.3
+            q = quaternion_from_euler( -3.14, 0.0, -3.14/2.0 )
+            target_pose.orientation.x = q[0]
+            target_pose.orientation.y = q[1]
+            target_pose.orientation.z = q[2]
+            target_pose.orientation.w = q[3]
+            arm.set_pose_target( target_pose )
+            arm.go()
 
-                target_pose.orientation.x = q[0]
-                target_pose.orientation.y = q[1]
-                target_pose.orientation.z = q[2]
-                target_pose.orientation.w = q[3]
-
-                arm.set_pose_target( target_pose )
-                arm.go()
-                if key == "e":
-                    break
-
-            """
             rospy.sleep(1.0)
 
             target_pose = geometry_msgs.msg.Pose()
@@ -173,50 +165,159 @@ class Home(object):
             
             arm.set_pose_target( target_pose )
             arm.go()
-            """
 
-            
-            
-
-                
-
-
-        if key == "w":    #確認用
+        if key == "w":
+            x_buff = 0.26 + self.t_y - 0.045
+            y_buff = self.t_x + 0.05
             target_pose = geometry_msgs.msg.Pose()
-            target_pose.position.x = 0.3
-            target_pose.position.y = -0.1
+            target_joint_values = arm.get_current_joint_values()
+            target_pose.position.x = x_buff
+            target_pose.position.y = y_buff
             print(target_pose.position.x, target_pose.position.y)
             target_pose.position.z = 0.3
-            q = quaternion_from_euler(-3.14, 0.0, -3.14/2.0)  # 上方から掴みに行く場合
+            q = quaternion_from_euler( -3.14, 0.0, -3.14/2.0 )
             target_pose.orientation.x = q[0]
             target_pose.orientation.y = q[1]
             target_pose.orientation.z = q[2]
             target_pose.orientation.w = q[3]
-            target_joint_values[6] = math.radians(90)
             arm.set_pose_target( target_pose )
-            arm.set_joint_value_target(target_joint_values)
             arm.go()
 
-        if key == "q":    #確認用
+            rospy.sleep(1.0)
+
             target_pose = geometry_msgs.msg.Pose()
-            target_pose.position.x = -self.t_x + 0.3
-            target_pose.position.y = -self.t_y
+            target_joint_values = arm.get_current_joint_values()
+            target_pose.position.x = x_buff
+            target_pose.position.y = y_buff
             print(target_pose.position.x, target_pose.position.y)
-            target_pose.position.z = 0.3
-            q = quaternion_from_euler(-3.14, 0.0, -3.14/2.0)  # 上方から掴みに行く場合
+            target_pose.position.z = 0.25
+            q = quaternion_from_euler( -3.14, 0.0, -3.14/2.0 )
             target_pose.orientation.x = q[0]
             target_pose.orientation.y = q[1]
             target_pose.orientation.z = q[2]
             target_pose.orientation.w = q[3]
-            target_joint_values[6] = math.radians(90)
+            
             arm.set_pose_target( target_pose )
-            arm.set_joint_value_target(target_joint_values)
             arm.go()
 
-        if key == "z":
-            print(x_buff,y_buff)
+            rospy.sleep(1.0)
 
+            target_pose = geometry_msgs.msg.Pose()
+            target_joint_values = arm.get_current_joint_values()
+            target_pose.position.x = x_buff
+            target_pose.position.y = y_buff
+            print(target_pose.position.x, target_pose.position.y)
+            target_pose.position.z = 0.3
+            q = quaternion_from_euler( -3.14, 0.0, -3.14/2.0 )
+            target_pose.orientation.x = q[0]
+            target_pose.orientation.y = q[1]
+            target_pose.orientation.z = q[2]
+            target_pose.orientation.w = q[3]
+            
+            arm.set_pose_target( target_pose )
+            arm.go()
 
+        if key == "e":
+            x_buff = 0.26 + self.t_y - 0.045
+            y_buff = self.t_x + 0.05
+            target_pose = geometry_msgs.msg.Pose()
+            target_joint_values = arm.get_current_joint_values()
+            target_pose.position.x = x_buff
+            target_pose.position.y = y_buff
+            print(target_pose.position.x, target_pose.position.y)
+            target_pose.position.z = 0.3
+            q = quaternion_from_euler( -3.14, 0.0, -3.14/2.0 )
+            target_pose.orientation.x = q[0]
+            target_pose.orientation.y = q[1]
+            target_pose.orientation.z = q[2]
+            target_pose.orientation.w = q[3]
+            arm.set_pose_target( target_pose )
+            arm.go()
+
+            rospy.sleep(1.0)
+
+            target_pose = geometry_msgs.msg.Pose()
+            target_joint_values = arm.get_current_joint_values()
+            target_pose.position.x = x_buff
+            target_pose.position.y = y_buff
+            print(target_pose.position.x, target_pose.position.y)
+            target_pose.position.z = 0.25
+            q = quaternion_from_euler( -3.14, 0.0, -3.14/2.0 )
+            target_pose.orientation.x = q[0]
+            target_pose.orientation.y = q[1]
+            target_pose.orientation.z = q[2]
+            target_pose.orientation.w = q[3]
+            
+            arm.set_pose_target( target_pose )
+            arm.go()
+
+            rospy.sleep(1.0)
+
+            target_pose = geometry_msgs.msg.Pose()
+            target_joint_values = arm.get_current_joint_values()
+            target_pose.position.x = x_buff
+            target_pose.position.y = y_buff
+            print(target_pose.position.x, target_pose.position.y)
+            target_pose.position.z = 0.3
+            q = quaternion_from_euler( -3.14, 0.0, -3.14/2.0 )
+            target_pose.orientation.x = q[0]
+            target_pose.orientation.y = q[1]
+            target_pose.orientation.z = q[2]
+            target_pose.orientation.w = q[3]
+            
+            arm.set_pose_target( target_pose )
+            arm.go()
+
+        if key == "r":
+            x_buff = 0.26 + self.t_y - 0.045
+            y_buff = self.t_x + 0.05
+            target_pose = geometry_msgs.msg.Pose()
+            target_joint_values = arm.get_current_joint_values()
+            target_pose.position.x = x_buff
+            target_pose.position.y = y_buff
+            print(target_pose.position.x, target_pose.position.y)
+            target_pose.position.z = 0.3
+            q = quaternion_from_euler( -3.14, 0.0, -3.14/2.0 )
+            target_pose.orientation.x = q[0]
+            target_pose.orientation.y = q[1]
+            target_pose.orientation.z = q[2]
+            target_pose.orientation.w = q[3]
+            arm.set_pose_target( target_pose )
+            arm.go()
+
+            rospy.sleep(1.0)
+
+            target_pose = geometry_msgs.msg.Pose()
+            target_joint_values = arm.get_current_joint_values()
+            target_pose.position.x = x_buff
+            target_pose.position.y = y_buff
+            print(target_pose.position.x, target_pose.position.y)
+            target_pose.position.z = 0.25
+            q = quaternion_from_euler( -3.14, 0.0, -3.14/2.0 )
+            target_pose.orientation.x = q[0]
+            target_pose.orientation.y = q[1]
+            target_pose.orientation.z = q[2]
+            target_pose.orientation.w = q[3]
+            
+            arm.set_pose_target( target_pose )
+            arm.go()
+
+            rospy.sleep(1.0)
+
+            target_pose = geometry_msgs.msg.Pose()
+            target_joint_values = arm.get_current_joint_values()
+            target_pose.position.x = x_buff
+            target_pose.position.y = y_buff
+            print(target_pose.position.x, target_pose.position.y)
+            target_pose.position.z = 0.3
+            q = quaternion_from_euler( -3.14, 0.0, -3.14/2.0 )
+            target_pose.orientation.x = q[0]
+            target_pose.orientation.y = q[1]
+            target_pose.orientation.z = q[2]
+            target_pose.orientation.w = q[3]
+            
+            arm.set_pose_target( target_pose )
+            arm.go()
 
         if key == "f":
             print("vertical")
