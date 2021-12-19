@@ -1,34 +1,78 @@
-CRANE-X7のROSパッケージです。このパッケージはオリジナルである [https://github.com/rt-net/crane_x7_ros]　に対して千葉工業大学未来ロボティクス学科の2021年度の設計製作論3という講義で知能コース1班が変更を加えたものです。
-
 # RobotDesign3_2021_1
 
- ## 動作環境
- 
- ## インストール方法
+## パッケージについて
+このパッケージは[オリジナル](https://github.com/rt-net/crane_x7_ros)である株式会社アールティ様のパッケージを使用して、千葉工業大学未来ロボティクス学科の2021年度の設計製作論3という講義で知能コース1班が作成したものです。このリポジトリは株式会社アールティ様のライセンスに則って作成しています。詳細は、LICENSEファイルをご参照ください。
 
-### ソースからビルドする方法
+## 概要
 
+このリポジトリは、株式会社アールティ様が販売されているcrane_x7を制御しナイフ刺しをさせるパッケージです。
+このパッケージを使用する際カメラが必要になりますが、今回はRealSenseD435の使用を前提としています。
+
+## 動作環境
+OS : Ubuntu 18.04LTS
+
+ROS Distribution: Melodic Morenia
+
+Gazebo 9.0.0
+
+Rviz 1.13.21
 
 ## セットアップ方法
 
+- gitを使用して、robotdesign3_2021_1をダウロードします
+```
+cd ~/catkin_ws/src
+git clone https://github.com/MakiSakurai/robotdesign3_2021_1.git
+```
 
-## パッケージ概要
+- 株式会社アールティ様から配布されているcrane_x7_rosをダウロードします
+```
+cd ~/catkin_ws/src
+git clone https://github.com/rt-net/crane_x7_ros.git
+```
+
+- このパッケージは、RealSenseD435を使用することを想定しているので、RealSenseD435のシミュレーターのモデルの適用のため、Kuwamai様が公開されているcrane_x7_d435をダウロードします
+```
+cd ~/catkin_ws/src
+git clone https://github.com/Kuwamai/crane_x7_d435.git
+```
+
+- catkin buildを使用して本パッケージをビルドします
+```
+cd ~/catkin
+catkin build
+source ~/catkin_ws/devel/setup.bash
+```
+
+- 今回カメラを使用しますが、[robotdesign3_2021_1/hand_coordinates.pyの18行目](https://github.com/MakiSakurai/robotdesign3_2021_1/blob/main/hand_coordinates.py#:~:text=cap%20%3D%20cv2.VideoCapture(-,4,-))を使用しているカメラが認識されている/dev/videoの番号に変更してください
 
 
-### 知的財産権について
+## 使用方法
 
-CRANE-X7は、アールティが開発した研究用アームロボットです。
-このリポジトリのデータ等に関するライセンスについては、LICENSEファイルをご参照ください。
-企業による使用については、自社内において研究開発をする目的に限り、本データの使用を許諾します。 
-本データを使って自作されたい方は義務ではありませんが弊社ロボットショップで部品をお買い求めいただければ、励みになります。
-商業目的をもって本データを使用する場合は、商業用使用許諾の条件等について弊社までお問合せください。
+### シミュレーター起動用コマンド
 
-サーボモータのXM540やXM430に関するCADモデルの使用については、ROBOTIS社より使用許諾を受けています。 
-CRANE-X7に使用されているROBOTIS社の部品類にかかる著作権、商標権、その他の知的財産権は、ROBOTIS社に帰属します。
+```
+roslaunch robotdesign3_2021_1 main_sim.launch
+```
 
-### Proprietary Rights
+### 実機起動用コマンド
 
-CRANE-X7 is an arm robot developed by RT Corporation for research purposes. Please read the license information contained in this repository to find out more about licensing. Companies are permitted to use CRANE-X7 and the materials made available here for internal, research and development purposes only. If you are interested in building your own robot for your personal use by utilizing the information made available here, take your time to visit our website and purchase relevant components and parts – that will certainly help us keep going! Otherwise, if you are interested in manufacturing and commercializing products based on the information herein, please contact us to arrange a license and collaboration agreement with us. 
+crane_x7をPCに接続し、以下のコマンドを実行してデバイスドライバに実行権限を与えてから起動します
+```
+sudo chmod 666 /dev/ttyUSB0
+roslaunch robotdesign3_2021_1 main.launch
+```
 
-We have obtained permission from ROBOTIS Co., Ltd. to use CAD models relating to servo motors XM540 and XM430. The proprietary rights relating to any components or parts manufactured by ROBOTIS and used in this product, including but not limited to copyrights, trademarks, and other intellectual property rights, shall remain vested in ROBOTIS.
+### キーボード操作一覧
 
+```
+o: グリッパーを開く
+c: グリッパーを閉める
+f: verticalへ移動
+h: ホームポジションへ移動
+q: 親指・人差し指の間へ移動し刺す
+w: 人差し指・中指の間へ移動し刺す
+e: 中指・薬指の間へ移動し刺す
+r: 人差し指・中指の間へ移動し刺す
+l: 親指・人差し指の間への移動をループ
+```
