@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="use_effort_gripper" default="false" />
+  <arg name="use_gazebo" default="false" />
+  <arg name="fake_execution" default="false" />
+
+  <include file="$(find crane_x7_bringup)/launch/demo.launch">
+    <arg name="fake_execution" value="$(arg fake_execution)" />
+  </include>
+
+  <param name="robot_description"
+    command="$(find xacro)/xacro --inorder '$(find crane_x7_d435)/urdf/crane_x7_d435.xacro' use_effort_gripper:=$(arg use_effort_gripper) use_gazebo:=$(arg use_gazebo)"
+    />
+    <node pkg="robotdesign3_2021_1" name="Pose_MediaPipe" type="main_process.py" />
+    <node pkg="robotdesign3_2021_1" name="MediaPipe_node" type="hand_coordinates.py" />
+</launch>
+
