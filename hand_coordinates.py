@@ -15,7 +15,7 @@ def main():
   rospy.init_node("MediaPipe_node")
   hand_position = rospy.Publisher('hand_topic', CustomArray, queue_size=10)
   r = rospy.Rate(10) # 10hz
-  cap = cv2.VideoCapture(0)
+  cap = cv2.VideoCapture(4)
   array_points = CustomArray()
   array_points.points= [0]
   #hp = CustomArray()
@@ -122,6 +122,8 @@ def main():
           hand_position.publish(array_points)
           #hand_position.publish(hp.points)
           print(array_points.points[0].x)
+          
+          print(gap4x,gap4y)
           
           
 

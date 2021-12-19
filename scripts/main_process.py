@@ -164,21 +164,21 @@ class Home(object):
             #arm.set_pose_target( target_pose )
             arm.set_joint_value_target(target_joint_values)
             # print("current_joint_values (radians):")
-            #arm_goal_pose = arm.get_current_pose().pose
+            arm_goal_pose = arm.get_current_pose().pose
             arm.go()
             # print("Arm goal pose:")
-            # print(arm_goal_pose)
+            print(arm_goal_pose)
 
 
         if key == "q":
             hand1_x_buff = 0.26 + self.hand1_y - 0.045
-            hand1_y_buff = -(self.hand1_x + 0.05)
+            hand1_y_buff = (self.hand1_x + 0.05)
             target_pose = geometry_msgs.msg.Pose()
             target_joint_values = arm.get_current_joint_values()
             target_pose.position.x = hand1_x_buff
             target_pose.position.y = hand1_y_buff
             print(target_pose.position.x, target_pose.position.y)
-            target_pose.position.z = 0.3
+            target_pose.position.z = 0.32
             q = quaternion_from_euler( -3.14, 0.0, -3.14/2.0 )
             target_pose.orientation.x = q[0]
             target_pose.orientation.y = q[1]
@@ -193,7 +193,7 @@ class Home(object):
             target_pose.position.x = hand1_x_buff
             target_pose.position.y = hand1_y_buff
             print(target_pose.position.x, target_pose.position.y)
-            target_pose.position.z = 0.2
+            target_pose.position.z = 0.25
             q = quaternion_from_euler( -3.14, 0.0, -3.14/2.0 )
             target_pose.orientation.x = q[0]
             target_pose.orientation.y = q[1]
@@ -210,7 +210,7 @@ class Home(object):
             target_pose.position.x = hand1_x_buff
             target_pose.position.y = hand1_y_buff
             print(target_pose.position.x, target_pose.position.y)
-            target_pose.position.z = 0.3
+            target_pose.position.z = 0.32
             q = quaternion_from_euler( -3.14, 0.0, -3.14/2.0 )
             target_pose.orientation.x = q[0]
             target_pose.orientation.y = q[1]
@@ -219,16 +219,36 @@ class Home(object):
             
             arm.set_pose_target( target_pose )
             arm.go()
+
+        if key == "l":
+            while True:
+                hand1_x_buff = 0.26 + self.hand1_y - 0.040
+                hand1_y_buff = (self.hand1_x + 0.05)
+                target_pose = geometry_msgs.msg.Pose()
+                target_joint_values = arm.get_current_joint_values()
+                target_pose.position.x = hand1_x_buff
+                target_pose.position.y = hand1_y_buff
+                print(target_pose.position.x, target_pose.position.y)
+                target_pose.position.z = 0.32
+                q = quaternion_from_euler( -3.14, 0.0, -3.14/2.0 )
+                target_pose.orientation.x = q[0]
+                target_pose.orientation.y = q[1]
+                target_pose.orientation.z = q[2]
+                target_pose.orientation.w = q[3]
+                arm.set_pose_target( target_pose )
+                arm.go()
+                rospy.sleep(1.0)
+
 
         if key == "w":
-            hand2_x_buff = 0.26 + self.hand2_y - 0.045
-            hand2_y_buff = -(self.hand2_x + 0.05)
+            hand2_x_buff = 0.26 + self.hand2_y - 0.040
+            hand2_y_buff = (self.hand2_x + 0.062)
             target_pose = geometry_msgs.msg.Pose()
             target_joint_values = arm.get_current_joint_values()
             target_pose.position.x = hand2_x_buff
             target_pose.position.y = hand2_y_buff
             print(target_pose.position.x, target_pose.position.y)
-            target_pose.position.z = 0.3
+            target_pose.position.z = 0.32
             q = quaternion_from_euler( -3.14, 0.0, -3.14/2.0 )
             target_pose.orientation.x = q[0]
             target_pose.orientation.y = q[1]
@@ -261,7 +281,7 @@ class Home(object):
             target_pose.position.x = hand2_x_buff
             target_pose.position.y = hand2_y_buff
             print(target_pose.position.x, target_pose.position.y)
-            target_pose.position.z = 0.3
+            target_pose.position.z = 0.32
             q = quaternion_from_euler( -3.14, 0.0, -3.14/2.0 )
             target_pose.orientation.x = q[0]
             target_pose.orientation.y = q[1]
@@ -272,14 +292,14 @@ class Home(object):
             arm.go()
 
         if key == "e":
-            hand3_x_buff = 0.26 + self.hand3_y - 0.045
-            hand3_y_buff = -(self.hand3_x + 0.05)
+            hand3_x_buff = 0.26 + self.hand3_y - 0.048
+            hand3_y_buff = (self.hand3_x + 0.075)
             target_pose = geometry_msgs.msg.Pose()
             target_joint_values = arm.get_current_joint_values()
             target_pose.position.x = hand3_x_buff
             target_pose.position.y = hand3_y_buff
             print(target_pose.position.x, target_pose.position.y)
-            target_pose.position.z = 0.3
+            target_pose.position.z = 0.32
             q = quaternion_from_euler( -3.14, 0.0, -3.14/2.0 )
             target_pose.orientation.x = q[0]
             target_pose.orientation.y = q[1]
@@ -312,7 +332,7 @@ class Home(object):
             target_pose.position.x = hand3_x_buff
             target_pose.position.y = hand3_y_buff
             print(target_pose.position.x, target_pose.position.y)
-            target_pose.position.z = 0.3
+            target_pose.position.z = 0.32
             q = quaternion_from_euler( -3.14, 0.0, -3.14/2.0 )
             target_pose.orientation.x = q[0]
             target_pose.orientation.y = q[1]
@@ -323,14 +343,14 @@ class Home(object):
             arm.go()
 
         if key == "r":
-            hand4_x_buff = 0.26 + self.hand4_y - 0.045
-            hand4_y_buff = -(self.hand4_x + 0.05)
+            hand4_x_buff = 0.26 + self.hand4_y - 0.033
+            hand4_y_buff = (self.hand4_x + 0.08)
             target_pose = geometry_msgs.msg.Pose()
             target_joint_values = arm.get_current_joint_values()
             target_pose.position.x = hand4_x_buff
             target_pose.position.y = hand4_y_buff
             print(target_pose.position.x, target_pose.position.y)
-            target_pose.position.z = 0.3
+            target_pose.position.z = 0.32
             q = quaternion_from_euler( -3.14, 0.0, -3.14/2.0 )
             target_pose.orientation.x = q[0]
             target_pose.orientation.y = q[1]
@@ -363,7 +383,7 @@ class Home(object):
             target_pose.position.x = hand4_x_buff
             target_pose.position.y = hand4_y_buff
             print(target_pose.position.x, target_pose.position.y)
-            target_pose.position.z = 0.3
+            target_pose.position.z = 0.32
             q = quaternion_from_euler( -3.14, 0.0, -3.14/2.0 )
             target_pose.orientation.x = q[0]
             target_pose.orientation.y = q[1]
