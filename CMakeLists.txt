@@ -10,7 +10,9 @@ project(robotdesign3_2021_1)
 find_package(catkin REQUIRED COMPONENTS
   message_generation
   rospy
+  std_msgs
   geometry_msgs
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
