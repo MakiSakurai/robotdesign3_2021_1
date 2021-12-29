@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
+
 import rospy
 import sys
 import moveit_commander
@@ -16,7 +17,6 @@ from control_msgs.msg import (
     GripperCommandGoal
 )
 
-
 class Home(object):
     def __init__(self):
         rospy.init_node("Pose_MediaPipe")
@@ -26,7 +26,6 @@ class Home(object):
         self.robot = moveit_commander.RobotCommander()
         self.array_points = CustomArray()
         
-        # Wait 10 Seconds for the gripper action server to start or exit
         self._client.wait_for_server(rospy.Duration(10.0))
         if not self._client.wait_for_server(rospy.Duration(10.0)):
             rospy.logerr("txiting - Gripper Action Server Not Found.")
@@ -57,11 +56,6 @@ class Home(object):
 
     def callback(self, msg):
         
-        #print("-"*20)
-        #print("topic")
-        #print(msg)
-        #print("-"*20)
-
         self.hand1_x = msg.points[0].x
         self.hand1_y = msg.points[0].y
         self.hand1_z = msg.points[0].z
@@ -142,7 +136,6 @@ class Home(object):
             arm.set_joint_value_target(target_joint_values) #初期姿勢をマニピュレータにセット
             arm.go()#初期位置へ移動開始
 
-            #print("current_joint_values (radians):")
             print("-"*20)
             print("move to home")
             arm_goal_pose = arm.get_current_pose().pose
@@ -151,22 +144,10 @@ class Home(object):
             print("-"*20)
 
             rospy.sleep(0.5)
-            # target_pose = geometry_msgs.msg.Pose()
-            # target_pose.position.x = 0.3
-            # target_pose.position.y = 0.0
-            # target_pose.position.z = 0.3
-            # q = quaternion_from_euler(-3.14, 0.0, -3.14/2.0)  # 上方から掴みに行く場合
-            # target_pose.orientation.x = q[0]
-            # target_pose.orientation.y = q[1]
-            # target_pose.orientation.z = q[2]
-            # target_pose.orientation.w = q[3]
             target_joint_values[6] = math.radians(-90)
-            #arm.set_pose_target( target_pose )
             arm.set_joint_value_target(target_joint_values)
-            # print("current_joint_values (radians):")
             arm_goal_pose = arm.get_current_pose().pose
             arm.go()
-            # print("Arm goal pose:")
             print(arm_goal_pose)
 
 

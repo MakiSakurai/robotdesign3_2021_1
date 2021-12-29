@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import cv2
 import mediapipe as mp
 import rospy
@@ -15,10 +17,9 @@ def main():
   rospy.init_node("MediaPipe_node")
   hand_position = rospy.Publisher('hand_topic', CustomArray, queue_size=10)
   r = rospy.Rate(10) # 10hz
-  cap = cv2.VideoCapture(4)
+  cap = cv2.VideoCapture(8)
   array_points = CustomArray()
   array_points.points= [0]
-  #hp = CustomArray()
   with mp_hands.Hands(
     min_detection_confidence=0.5,
     min_tracking_confidence=0.5) as hands:
@@ -26,22 +27,15 @@ def main():
     
     while not rospy.is_shutdown():
       
-  # For webcam input:
       success, image = cap.read()
       if not success:
         print("Ignoring empty camera frame.")
-        # If loading a video, use 'break' instead of 'continue'.
         continue
 
-      # Flip the image horizontally for a later selfie-view display, and convert
-      # the BGR image to RGB.
       image = cv2.cvtColor(cv2.flip(image, 1), cv2.COLOR_BGR2RGB)
-      # To improve performance, optionally mark the image as not writeable to
-      # pass by reference.
       image.flags.writeable = False
       results = hands.process(image)
       image_height, image_width, _ = image.shape
-      # Draw the hand annotations on the image.
       image.flags.writeable = True
       image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
       if results.multi_hand_landmarks:
@@ -52,7 +46,6 @@ def main():
               landmark_y = min(int(landmark.y * image_height), image_height - 1)
 
               if index == 3: #親指第一関節
-                  #cx3,cy3 = landmark.x * image_width, landmark.y * image_height
                   cx3,cy3 = landmark_x, landmark_y
               if index == 7: #人差し指第一関節
                   cx7,cy7 = landmark_x, landmark_y
@@ -120,13 +113,11 @@ def main():
           array_points.points.append(point_4)
 
           hand_position.publish(array_points)
-          #hand_position.publish(hp.points)
           print(array_points.points[0].x)
           
           print(gap4x,gap4y)
           
-          
-
+          #カメラ画像に値を表示させたい場合は
           #cv2.putText(image,"gap1x:"+str(gap1x)+"gap1y:"+str(gap1y),(10,30),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
           #cv2.putText(image,"gap2x:"+str(gap2x)+"gap2y:"+str(gap2y),(10,60),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)            
           #cv2.putText(image,"gap3x:"+str(gap3x)+"gap3y:"+str(gap3y),(10,90),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)           
