@@ -7,6 +7,16 @@
 このパッケージを使用する際カメラが必要になりますが、今回はRealSenseD435の使用を前提としています。
 また、手の検出をする際に Google LLC様の[MediaPipe](https://github.com/google/mediapipe)を使用しています。
 
+![image](https://user-images.githubusercontent.com/71488377/149614905-e17dba93-1e87-435e-b931-933f89a889c4.png)
+
+
+
+### MediaPipeを用いた手の検出
+
+以下の画像のようにカメラ画像から手を検出し、各関節の座標を取得します。各指の第一関節の座標を取得し、関節間の距離からナイフで刺す座標を計算し、緑の円マークを置いています。任意のキーボードを押すと、このマークを狙ってマニピュレータが動きます。
+
+![image](https://user-images.githubusercontent.com/71488377/149612675-90df7be8-6dd9-4923-abc3-fcecb6775b36.png)
+
 ## 動作環境
 OS : Ubuntu 18.04LTS
 
